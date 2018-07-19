@@ -1,9 +1,15 @@
-/*////////////////////////////////////////////////////////////////
-// ------------------------------------------------------------
-// AEVA LAB CODE
-// DETAILS: MVP-V5
-// ------------------------------------------------------------
-///////////////////////////////////////////////////////////////*/
+/**********************************************************************;
+* Project           : Aeva Labs Demo Unit
+*
+* Program name      : MVP-V9.ino
+*
+* Author            : wdcosta
+*
+* Date created      : 06/15/2018
+*
+* Purpose           : Main page for the MVP code
+*
+|**********************************************************************/
 
 #include <stdint.h>
 #include <UTFT.h>
@@ -20,8 +26,10 @@ uint8_t i=0;
 uint8_t temp=0;
 uint8_t temp2 = 0;
 uint8_t default_temp = 75;
+uint8_t default_temp2;
 uint8_t flag = 1;
 uint8_t Start_flag = 0;
+uint8_t P_flag = 0;
 uint8_t P1_flag = 0;
 uint8_t P2_flag = 0;
 uint8_t Stop_flag = 0;
@@ -83,6 +91,7 @@ volatile unsigned int Time_Remaining=0;
 
 volatile int stage=0;
 volatile int page=0;
+volatile int default_flag=0;
 
 char cmdStr[11]; //Commands can be up to 10 letters/number longs
 char newtemp[10];
@@ -340,8 +349,7 @@ void setup()
   pinMode(FT5206_INT, INPUT);
   //digitalWrite(FT5206_INT, HIGH ); 
   
-  uint8_t periodMonitor = readFT5206TouchRegister(0x89);
-    
+  uint8_t periodMonitor = readFT5206TouchRegister(0x89);  
   uint8_t  lenLibVersion = readFT5206TouchAddr(0x0a1, buf, 2 );
   if (lenLibVersion)
   {
@@ -353,9 +361,6 @@ void setup()
   }
   
   uint8_t firmwareId = readFT5206TouchRegister( 0xa6 );
-  Serial.print("firmware ID = ");
-  Serial.println( firmwareId);
-  
   windowStartTime = millis();
 
   //initialize the variables we're linked to

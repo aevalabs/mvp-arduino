@@ -54,20 +54,22 @@ void StartUpScreen(void)
                  if(page==1){
                   if(touchLocations[i].x>=280&&touchLocations[i].x<=480&&touchLocations[i].y>=300&&touchLocations[i].y<=380 )
                   {
+                    default_flag=1;
                     Configure_Extraction();        
                   }
                  } 
                 
                  else if(page==2){
-                   if(touchLocations[i].x>=0&&touchLocations[i].x<=200&&touchLocations[i].y>=55&&touchLocations[i].y<=200 )
+                   if(touchLocations[i].x>=0&&touchLocations[i].x<=200&&touchLocations[i].y>=55&&touchLocations[i].y<=100 )//150
                    {  //Back
                       Stop_flag=1;
                       Clear_Array();
                       Home_Page(); 
                       page=1; 
                    }
-                   else if(touchLocations[i].x>=550&&touchLocations[i].x<=800&&touchLocations[i].y>=300&&touchLocations[i].y<=400 )
+                   else if(touchLocations[i].x>=550&&touchLocations[i].x<=800&&touchLocations[i].y>=350&&touchLocations[i].y<=450 )
                     { //Next
+                      default_flag=0;
                       Configure_Maturity();
                       page=3;             
                     }
@@ -75,7 +77,7 @@ void StartUpScreen(void)
                     {  
                       Temperature_Increase1();//(260, 200, 290, 230);
                     }
-                    else if(touchLocations[i].x>=250&&touchLocations[i].x<=290&&touchLocations[i].y>=200&&touchLocations[i].y<=230 )
+                    else if(touchLocations[i].x>=250&&touchLocations[i].x<=300&&touchLocations[i].y>=200&&touchLocations[i].y<=240 )
                     {    
                       Temperature_Decrease1();//(490, 200, 520, 230);
                     }
@@ -89,8 +91,9 @@ void StartUpScreen(void)
                     }//40, 250, 180, 300
                      else if(touchLocations[i].x>=40&&touchLocations[i].x<=180&&touchLocations[i].y>=250&&touchLocations[i].y<=300 )
                      { 
-                      Clear_Array();   
-                      Default_Configure_Extraction();
+                     default_flag=2;
+                     Reset_Default_Values_Extraction();   
+                     Default_Configure_Extraction();
                      }
                  }
                  
@@ -118,7 +121,12 @@ void StartUpScreen(void)
                     else if(touchLocations[i].x>=250&&touchLocations[i].x<=290&&touchLocations[i].y>=320&&touchLocations[i].y<=370 )
                     {    
                       Time_Decrease2();
-                    }    
+                    }
+                    else if(touchLocations[i].x>=40&&touchLocations[i].x<=180&&touchLocations[i].y>=250&&touchLocations[i].y<=300 )
+                     { 
+                     Reset_Default_Values_Maturity();   
+                      Default_Configure_Maturity();
+                     }    
                  }
   
                  else if(page==4){
@@ -176,7 +184,7 @@ void StartUpScreen(void)
                    }
                    else if(touchLocations[i].x>=550&&touchLocations[i].x<=800&&touchLocations[i].y>=300&&touchLocations[i].y<=400 )
                     { //Next
-                      Default_Configure_Maturity();
+                      Configure_Maturity();
                       default_temp = 75;
                       page=3;             
                     }
@@ -197,8 +205,49 @@ void StartUpScreen(void)
                       Default_Time_Decrease1();
                     }//40, 250, 180, 300
                      else if(touchLocations[i].x>=40&&touchLocations[i].x<=180&&touchLocations[i].y>=250&&touchLocations[i].y<=300 )
-                     {    
-                       Default_Configure_Extraction();
+                     {  
+                      Reset_Default_Values_Extraction();  
+                      Default_Configure_Extraction();
+                     }
+                 }
+
+                 else if(page==9){
+                   
+                   if(touchLocations[i].x>=0&&touchLocations[i].x<=200&&touchLocations[i].y>=55&&touchLocations[i].y<=200 )
+                   {  //Back
+                    if(default_flag=1)
+                    {
+                     Configure_Extraction();      
+                    }
+                    else if(default_flag=2)
+                    {
+                      Default_Configure_Extraction();      
+                    }
+                   }
+                   else if(touchLocations[i].x>=550&&touchLocations[i].x<=800&&touchLocations[i].y>=300&&touchLocations[i].y<=400 )
+                    { //Next
+                      Start_Page();           
+                    }
+                   else if(touchLocations[i].x>=490&&touchLocations[i].x<=540&&touchLocations[i].y>=190&&touchLocations[i].y<=230 )
+                    {  
+                      Default_Temperature_Increase2();//(260, 200, 290, 230);
+                    }
+                    else if(touchLocations[i].x>=250&&touchLocations[i].x<=290&&touchLocations[i].y>=200&&touchLocations[i].y<=230 )
+                    {    
+                      Default_Temperature_Decrease2();//(490, 200, 520, 230);
+                    }
+                    else if(touchLocations[i].x>=500&&touchLocations[i].x<=550&&touchLocations[i].y>=320&&touchLocations[i].y<=370 )
+                    {    
+                      Default_Time_Increase2(); //(260, 320, 310, 370); (500, 320, 550, 370);
+                    }
+                    else if(touchLocations[i].x>=250&&touchLocations[i].x<=290&&touchLocations[i].y>=320&&touchLocations[i].y<=370 )
+                    {    
+                      Default_Time_Decrease2();
+                    }//40, 250, 180, 300
+                     else if(touchLocations[i].x>=40&&touchLocations[i].x<=180&&touchLocations[i].y>=250&&touchLocations[i].y<=300 )
+                     {  
+                      Reset_Default_Values_Maturity();  
+                      Default_Configure_Maturity();
                      }
                  }
                }
@@ -253,7 +302,7 @@ void StartUpScreen(void)
                 {
                   previousMillis3 = currentMillis;
                   P2_TotalTime = P2_TotalTime - 1; 
-                  //Serial.println(P2_TotalTime); 
+                  Serial.println(P2_TotalTime); 
                   if(P2_TotalTime > 1)
                   {
                     digitalWrite(HEATING_PIN,HIGH);

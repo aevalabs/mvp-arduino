@@ -25,40 +25,40 @@ void Add_Subtract_Buttons(void){
 myGLCD.setFont(BigFont);
 myGLCD.setBackColor(VGA_RED);
 myGLCD.setColor(VGA_RED);
-myGLCD.fillCircle(280,220,20);
+myGLCD.fillCircle(280,220,25);
 myGLCD.setColor(VGA_BLACK);
 //myGLCD.fillRoundRect(260, 200, 310, 250);
-myGLCD.drawCircle(280,220,20);
+myGLCD.drawCircle(280,220,25);
 myGLCD.setColor(VGA_WHITE);
 myGLCD.setFont(BigFont);
 myGLCD.print("-", 272, 213);   //button that increases the temp
             
 myGLCD.setBackColor(VGA_GREEN);
 myGLCD.setColor(VGA_GREEN);
-myGLCD.fillCircle(520, 220, 20);
+myGLCD.fillCircle(520, 220, 25);
 myGLCD.setColor(VGA_BLACK);
 //myGLCD.fillRoundRect(500, 200, 550, 250);
-myGLCD.drawCircle(520, 220, 20);
+myGLCD.drawCircle(520, 220, 25);
 myGLCD.setColor(VGA_WHITE);
 myGLCD.print("+", 512, 213);   //button that decreases the temp
             
 myGLCD.setFont(BigFont);
 myGLCD.setBackColor(VGA_RED);
 myGLCD.setColor(VGA_RED);
-myGLCD.fillCircle(280,350,20);
+myGLCD.fillCircle(280,350,25);
 myGLCD.setColor(VGA_BLACK);
 //myGLCD.fillRoundRect(260, 320, 310, 370);
-myGLCD.drawCircle(280,350,20);
+myGLCD.drawCircle(280,350,25);
 myGLCD.setColor(VGA_WHITE);
 myGLCD.setFont(BigFont);
 myGLCD.print("-", 272, 342);   //button that reduces the time
             
 myGLCD.setBackColor(VGA_GREEN);
 myGLCD.setColor(VGA_GREEN);
-myGLCD.fillCircle(520, 350, 20);
+myGLCD.fillCircle(520, 350, 25);
 myGLCD.setColor(VGA_BLACK);
 //myGLCD.fillRoundRect(500, 320, 550, 370);
-myGLCD.drawCircle(520, 350, 20);
+myGLCD.drawCircle(520, 350, 25);
 myGLCD.setColor(VGA_WHITE);
 myGLCD.print("+", 512, 342);   //button that increases the time
 }
@@ -438,8 +438,8 @@ myGLCD.setBackColor(VGA_GRAY);
 myGLCD.fillRoundRect(320, 180, 485, 250);
 myGLCD.setFont(SevenSegNumFont);
 myGLCD.setColor(VGA_BLACK);
-sprintf(default_newtemp, "%d", default_temp);
-myGLCD.print(default_newtemp, CENTER, 190);
+sprintf(newtemp, "%d", default_temp);
+myGLCD.print(newtemp, CENTER, 190);
 Add_Subtract_Buttons();           
 myGLCD.setBackColor(VGA_BACKGROUND);
 myGLCD.setColor(VGA_BLACK);
@@ -450,14 +450,21 @@ myGLCD.setBackColor(VGA_GRAY);
 myGLCD.fillRoundRect(320, 315, 485, 385);
 myGLCD.setFont(SevenSegNumFont);
 myGLCD.setColor(VGA_BLACK);
-sprintf(default_newmins1, "%d", default_minutes1);
-sprintf(default_newmins2, "%d", default_minutes2);
-sprintf(default_newhours, "%d", default_hours);
-myGLCD.print(default_newhours, 355, 325); //set temp value
+sprintf(newmins1, "%d", default_minutes1);
+sprintf(newmins2, "%d", default_minutes2);
+sprintf(newhours, "%d", default_hours);
+
+P1_Hours = atoi(newhours);
+P1_Minutes1 = atoi(newmins2);
+P1_Minutes2 = atoi(newmins1);
+P1_Total_Minutes = (10 * P1_Minutes1)+P1_Minutes2;
+P1_TotalTime = ((P1_Hours*60) + P1_Total_Minutes); 
+  
+myGLCD.print(newhours, 355, 325); //set temp value
 myGLCD.fillCircle (400,340, 4);
 myGLCD.fillCircle (400,360, 4);
-myGLCD.print(default_newmins1, 440, 325);
-myGLCD.print(default_newmins2, 410, 325);
+myGLCD.print(newmins1, 440, 325);
+myGLCD.print(newmins2, 410, 325);
            
 myGLCD.setColor(120, 170, 179);
 myGLCD.fillRoundRect(40, 250, 180, 300);
@@ -504,8 +511,9 @@ myGLCD.setBackColor(VGA_GRAY);
 myGLCD.fillRoundRect(325, 180, 480, 250);
 myGLCD.setFont(SevenSegNumFont);
 myGLCD.setColor(VGA_BLACK);
-myGLCD.print("0", CENTER, 190);
-myGLCD.print(newtemp2, CENTER, 190);           
+
+sprintf(newtemp2, "%d", default_temp2);
+myGLCD.print(newtemp2, CENTER, 190);
 Add_Subtract_Buttons();           
 myGLCD.setBackColor(VGA_BACKGROUND);
 myGLCD.setColor(VGA_BLACK);
@@ -513,16 +521,23 @@ myGLCD.setFont(BigFont);
 myGLCD.print("LENGTH:", CENTER, 290); // Set temp:
 myGLCD.setColor(VGA_GRAY);
 myGLCD.setBackColor(VGA_GRAY);
-myGLCD.fillRoundRect(325, 315, 480, 385);
+myGLCD.fillRoundRect(320, 315, 485, 385);
 myGLCD.setFont(SevenSegNumFont);
 myGLCD.setColor(VGA_BLACK);
-myGLCD.print("0", 355, 325); //set temp value
+sprintf(newmins3, "%d", default_minutes3);
+sprintf(newmins4, "%d", default_minutes4);
+sprintf(newhours2, "%d", default_hours2);
+
+P2_Hours = atoi(newhours2);
+P2_Minutes1 = atoi(newmins4);
+P2_Minutes2 = atoi(newmins3);
+P2_Total_Minutes = (10 * P2_Minutes1)+P2_Minutes2;
+P2_TotalTime = ((P2_Hours*60) + P2_Total_Minutes);   
+  
 myGLCD.print(newhours2, 355, 325); //set temp value
 myGLCD.fillCircle (400,340, 4);
 myGLCD.fillCircle (400,360, 4);
-myGLCD.print("0", 440, 325);
 myGLCD.print(newmins3, 440, 325);
-myGLCD.print("0", 410, 325);
 myGLCD.print(newmins4, 410, 325);
            
 myGLCD.setColor(120, 170, 179);
@@ -555,6 +570,8 @@ page=9;
 
 void Clear_Array(void)
 {
+temp=0;
+temp2 = 0;
 P1_Hours=0;
 P1_Total_Minutes=0;
 P1_Minutes1=0;
@@ -576,6 +593,14 @@ hours = 0;
 minutes3 = 0;
 minutes4 = 0;
 hours2 = 0;
+default_minutes1 = 0;
+default_minutes2 = 0;
+default_hours = 0;
+
+default_minutes3 = 0;
+default_minutes4 = 0;
+default_hours2 = 0;
+
 Max_minutes = 0;
 Max_minutes2 = 0;
 Max_hours = 0;
@@ -592,5 +617,23 @@ memset(Max_newmins2,0,sizeof(Max_newmins2));
 memset(Max_newhours,0,sizeof(Max_newhours));
 }
 
+void Reset_Default_Values_Extraction(void){
+Max_minutes = 0;
+Max_minutes2 = 3;
+Max_hours = 5;
+default_minutes1 = 0;
+default_minutes2 = 3;
+default_hours = 5;
+default_temp = 75;
+}
 
+void Reset_Default_Values_Maturity(void){
+default_minutes3 = 0;
+default_minutes4 = 3;
+default_hours2 = 5;
+Max_minutes = Max_minutes+default_minutes3;
+Max_minutes2 = Max_minutes2+default_minutes4;
+Max_hours = Max_hours+default_hours2;
+default_temp2 = 120;
+}
 

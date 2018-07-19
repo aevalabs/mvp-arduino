@@ -312,7 +312,6 @@ void setup()
 void loop()
 { 
   Serial.print("Sys: Online");
-  
   StartUpScreen(); 
     
 }

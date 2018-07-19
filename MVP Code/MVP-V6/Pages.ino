@@ -1,19 +1,13 @@
-/**********************************************************************;
-* Project           : Aeva Labs Demo Unit
-*
-* Program name      : Pages.ino (Part of the MVP-V7 code)
-*
-* Author            : wdcosta
-*
-* Date created      : 06/15/2018
-*
-* Purpose           : This code draws the multiple pages for the UI
-*
-|**********************************************************************/
+/*////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------
+// AEVA LAB CODE
+// DETAILS: Pages
+// ------------------------------------------------------------
+///////////////////////////////////////////////////////////////*/
 
 void Background(void){
 myGLCD.setColor(VGA_ROWS);
-myGLCD.fillRect(0, 0, 799, 50); 
+myGLCD.fillRect(0, 0, 799, 50); //Sets the background color
 myGLCD.setColor(VGA_BACKGROUND);
 myGLCD.fillRect(0, 50, 799, 439); //Sets the background color
 myGLCD.setColor(VGA_ROWS);
@@ -305,11 +299,13 @@ myGLCD.print("Current Temp:", 50, 200);
   else if(currentTemp < 140){
   myGLCD.print("ABOVE NORMAL LIMIT", 280, 200);  
   }
+ 
+
+
 myGLCD.setColor(243, 128, 97);
 myGLCD.fillRoundRect(550, 230, 700, 290);
 myGLCD.setBackColor(243, 128, 97);
 myGLCD.setColor(VGA_WHITE);
-myGLCD.setFont(BigFont);
 myGLCD.print("PAUSE", 580, 250); //start button
 page=5;  
 }
@@ -398,11 +394,10 @@ page=7;
 }
 
 
-void Completed_Page(void)
-{ 
+void Completed_Page(void){ 
 Background();
 myGLCD.setColor(VGA_BLACK);
-myGLCD.setFont(Arial_round_16x24);
+myGLCD.setFont(Inconsola);
 myGLCD.print("Aging Complete!", CENTER, 150);
   
 myGLCD.setColor(111, 225, 142);
@@ -420,9 +415,9 @@ myGLCD.print("Warning:Contents May Be Hot", CENTER, 390); //start button
 page=6;  
 } 
 
-void Default_Configure_Extraction(void)
-{
+void Default_Configure_Extraction(void){
 Background();
+
 myGLCD.setColor(VGA_BLACK);
 myGLCD.setFont(Arial_round_16x24); 
 myGLCD.print("Configure Extraction", CENTER, 80); // Set temp:
@@ -486,9 +481,9 @@ myGLCD.print("BACK", 60, 75); //start button
 page=8; 
 }
 
-void Default_Configure_Maturity(void)
-{
+void Default_Configure_Maturity(void){
 Background();
+
 myGLCD.setColor(VGA_BLACK);
 myGLCD.setFont(Arial_round_16x24); 
 myGLCD.print("Configure Maturity", CENTER, 80); // Set temp:
@@ -544,53 +539,50 @@ myGLCD.print("NEXT", 660, 400); //start button
 myGLCD.setColor(VGA_GREEN);
 myGLCD.setBackColor(VGA_BACKGROUND);
 myGLCD.setFont(Various_Symbols_32x32);
-myGLCD.print("R",20, 65); //off button          
+myGLCD.print("R",20, 65); //off button
+            
 myGLCD.setFont(BigFont);
-
 myGLCD.setColor(VGA_BLACK);
 myGLCD.print("BACK", 60, 75); //start button 
 page=9;                         
 }
 
 
-void Clear_Array(void)
-{
-P1_Hours=0;
-P1_Total_Minutes=0;
-P1_Minutes1=0;
-P1_Minutes2=0;
-P1_TotalTime=0;
-P2_Hours=0;
-P2_Total_Minutes=0;
-P2_Minutes1=0;
-P2_Minutes2=0;
-P2_TotalTime=0;
-Minutes1=0;
-Minutes2=0;
-Hours2=0;
-Minutes3=0;
-Minutes4=0;
-minutes1 = 0;
-minutes2 = 0;
-hours = 0;
-minutes3 = 0;
-minutes4 = 0;
-hours2 = 0;
-Max_minutes = 0;
-Max_minutes2 = 0;
-Max_hours = 0;
-memset(newtemp,0,sizeof(newtemp));
-memset(newtemp2,0,sizeof(newtemp2));
-memset(newmins1,0,sizeof(newmins1));
-memset(newmins2,0,sizeof(newmins2));
-memset(newhours,0,sizeof(newhours));
-memset(newmins3,0,sizeof(newmins3));
-memset(newmins4,0,sizeof(newmins4));
-memset(newhours2,0,sizeof(newhours2));
-memset(Max_newmins1,0,sizeof(Max_newmins1));
-memset(Max_newmins2,0,sizeof(Max_newmins2));
-memset(Max_newhours,0,sizeof(Max_newhours));
+void Clear_Array(void){
+  P1_Hours=0;
+  P1_Total_Minutes=0;
+  P1_Minutes1=0;
+  P1_Minutes2=0;
+  P1_TotalTime=0;
+  P2_Hours=0;
+  P2_Total_Minutes=0;
+  P2_Minutes1=0;
+  P2_Minutes2=0;
+  P2_TotalTime=0;
+  Minutes1=0;
+  Minutes2=0;
+  Hours2=0;
+  Minutes3=0;
+  Minutes4=0;
+  minutes1 = 0;
+  minutes2 = 0;
+  hours = 0;
+  minutes3 = 0;
+  minutes4 = 0;
+  hours2 = 0;
+  Max_minutes = 0;
+  Max_minutes2 = 0;
+  Max_hours = 0;
+  memset(newtemp,0,sizeof(newtemp));
+  memset(newtemp2,0,sizeof(newtemp2));
+  memset(newmins1,0,sizeof(newmins1));
+  memset(newmins2,0,sizeof(newmins2));
+  memset(newhours,0,sizeof(newhours));
+  memset(newmins3,0,sizeof(newmins3));
+  memset(newmins4,0,sizeof(newmins4));
+  memset(newhours2,0,sizeof(newhours2));
+  memset(Max_newmins1,0,sizeof(Max_newmins1));
+  memset(Max_newmins2,0,sizeof(Max_newmins2));
+  memset(Max_newhours,0,sizeof(Max_newhours));
 }
-
-
 

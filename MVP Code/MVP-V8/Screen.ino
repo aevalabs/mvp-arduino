@@ -89,7 +89,7 @@ void StartUpScreen(void)
                     }//40, 250, 180, 300
                      else if(touchLocations[i].x>=40&&touchLocations[i].x<=180&&touchLocations[i].y>=250&&touchLocations[i].y<=300 )
                      { 
-                      Clear_Array();   
+                      Reset_Default_Values();   
                       Default_Configure_Extraction();
                      }
                  }
@@ -197,7 +197,8 @@ void StartUpScreen(void)
                       Default_Time_Decrease1();
                     }//40, 250, 180, 300
                      else if(touchLocations[i].x>=40&&touchLocations[i].x<=180&&touchLocations[i].y>=250&&touchLocations[i].y<=300 )
-                     {    
+                     {  
+                      Reset_Default_Values();  
                        Default_Configure_Extraction();
                      }
                  }
@@ -232,7 +233,7 @@ void StartUpScreen(void)
             {
               previousMillis2 = currentMillis;
               P1_TotalTime = P1_TotalTime - 1;   
-              //Serial.println(P1_TotalTime); 
+              Serial.println(P1_TotalTime); 
               if(P1_TotalTime > 1)
               {
               Running_P1();

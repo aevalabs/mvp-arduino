@@ -1,9 +1,15 @@
-/*////////////////////////////////////////////////////////////////
-// ------------------------------------------------------------
-// AEVA LAB CODE
-// DETAILS: MVP-V5
-// ------------------------------------------------------------
-///////////////////////////////////////////////////////////////*/
+/**********************************************************************;
+* Project           : Aeva Labs Demo Unit
+*
+* Program name      : MVP-V10.ino
+*
+* Author            : wdcosta
+*
+* Date created      : 06/15/2018
+*
+* Purpose           : Main page for the MVP code
+*
+|**********************************************************************/
 
 #include <stdint.h>
 #include <UTFT.h>
@@ -19,9 +25,9 @@
 uint8_t i=0;
 uint8_t temp=0;
 uint8_t temp2 = 0;
-uint8_t default_temp = 75;
-uint8_t flag = 1;
+
 uint8_t Start_flag = 0;
+uint8_t P_flag = 0;
 uint8_t P1_flag = 0;
 uint8_t P2_flag = 0;
 uint8_t Stop_flag = 0;
@@ -30,20 +36,15 @@ int8_t minutes1 = 0;
 int8_t minutes2 = 0;
 int8_t hours = 0;
 
-int8_t default_minutes1 = 0;
-int8_t default_minutes2 = 3;
-int8_t default_hours = 5;
-
-int8_t default_minutes3 = 0;
-int8_t default_minutes4 = 3;
-int8_t default_hours2 = 120;
-
 int8_t minutes3 = 0;
 int8_t minutes4 = 0;
 int8_t hours2 = 0;
 int8_t Max_minutes = 0;
 int8_t Max_minutes2 = 0;
 int8_t Max_hours = 0;
+int8_t Max_minutes3 = 0;
+int8_t Max_minutes4 = 0;
+int8_t Max_hours2 = 0;
 
 int runTimeTimerCount = 0;
 int tempLimit = 468; // - digital limit calculated for temperature control. 
@@ -51,19 +52,14 @@ int tempLimitAnalog = 75; // - analog limit for informing users.
 int currentTemp = 0; // 0-1023, not stored as F value.
 
 volatile char operationFlag = 0;
-volatile int timeRemaining = 240; // in mins
-volatile int secToMin = 0;
 volatile int setTemp=0;
 volatile int setTemp2=0;
-volatile int Hours=0;
-volatile int Total_Minutes=0;
-volatile int Total_Minutes2=0;
 
-volatile int Minutes1=0;
-volatile int Minutes2=0;
-volatile int Hours2=0;
-volatile int Minutes3=0;
-volatile int Minutes4=0;
+volatile int Total_Minutes=0;
+
+volatile int Display_Minutes1=0;
+volatile int Display_Minutes2=0;
+volatile int Display_Hours=0;
 
 volatile int P1_Hours=0;
 volatile int P1_Total_Minutes=0;
@@ -93,15 +89,7 @@ char newhours[10];
 char newmins3[10];
 char newmins4[10];
 char newhours2[10];
-
-char default_newtemp[10];
-char default_newtemp2[10];
-char default_newmins1[10];
-char default_newmins2[10];
-char default_newhours[10];
-char default_newmins3[10];
-char default_newmins4[10];
-char default_newhours2[10];
+char Display_Current_Temp[10];
 
 char Max_newmins1[10];
 char Max_newmins2[10];
@@ -227,8 +215,7 @@ uint8_t readFT5206TouchLocation( TouchLocation * pLoc, uint8_t num )
     
     uint8_t hitPoints = status & 0x0f;
     
-    Serial.print("number of hit points = ");
-    Serial.println( hitPoints );
+   
     
     readFT5206TouchAddr( 0x03, tbuf, hitPoints*6);
     
@@ -340,8 +327,7 @@ void setup()
   pinMode(FT5206_INT, INPUT);
   //digitalWrite(FT5206_INT, HIGH ); 
   
-  uint8_t periodMonitor = readFT5206TouchRegister(0x89);
-    
+  uint8_t periodMonitor = readFT5206TouchRegister(0x89);  
   uint8_t  lenLibVersion = readFT5206TouchAddr(0x0a1, buf, 2 );
   if (lenLibVersion)
   {
@@ -353,9 +339,6 @@ void setup()
   }
   
   uint8_t firmwareId = readFT5206TouchRegister( 0xa6 );
-  Serial.print("firmware ID = ");
-  Serial.println( firmwareId);
-  
   windowStartTime = millis();
 
   //initialize the variables we're linked to

@@ -1,15 +1,9 @@
-/**********************************************************************;
-* Project           : Aeva Labs Demo Unit
-*
-* Program name      : Screen.ino (Part of the MVP-V7 code)
-*
-* Author            : wdcosta
-*
-* Date created      : 06/15/2018
-*
-* Purpose           : This code contains the display functions along with the main while loop
-*                     where all the process functions will be called.
-|**********************************************************************/
+/*////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------
+// AEVA LAB CODE
+// DETAILS: Screen
+// ------------------------------------------------------------
+///////////////////////////////////////////////////////////////*/
 
 // StartUp screen --------------------------------------------------------------------------------//
 // This function displays the begining screen on the UI
@@ -61,9 +55,8 @@ void StartUpScreen(void)
                  else if(page==2){
                    if(touchLocations[i].x>=0&&touchLocations[i].x<=200&&touchLocations[i].y>=55&&touchLocations[i].y<=200 )
                    {  //Back
-                      Stop_flag=1;
-                      Clear_Array();
-                      Home_Page(); 
+                      Clear_Array();          
+                      Home_Page();
                       page=1; 
                    }
                    else if(touchLocations[i].x>=550&&touchLocations[i].x<=800&&touchLocations[i].y>=300&&touchLocations[i].y<=400 )
@@ -88,8 +81,7 @@ void StartUpScreen(void)
                       Time_Decrease1();
                     }//40, 250, 180, 300
                      else if(touchLocations[i].x>=40&&touchLocations[i].x<=180&&touchLocations[i].y>=250&&touchLocations[i].y<=300 )
-                     { 
-                      Clear_Array();   
+                     {    
                       Default_Configure_Extraction();
                      }
                  }
@@ -144,9 +136,8 @@ void StartUpScreen(void)
                  else if(page==6){ //300, 250, 500, 330
                    if(touchLocations[i].x>=300&&touchLocations[i].x<=500&&touchLocations[i].y>=250&&touchLocations[i].y<=330 )
                    {   //Return          
-                      Stop_flag=1;
-                      Clear_Array();
                       Home_Page(); 
+                      Clear_Array();
                    }
                  }
                  else if(page==7){ //300, 250, 500, 330
@@ -154,6 +145,7 @@ void StartUpScreen(void)
                    {  //Cancel
                       Stop_flag=1;
                       Clear_Array();
+                      Background();
                       Home_Page();  
                    } //550, 290, 700, 350
                    else if(touchLocations[i].x>=550&&touchLocations[i].x<=700&&touchLocations[i].y>=180&&touchLocations[i].y<=240 )
@@ -198,7 +190,7 @@ void StartUpScreen(void)
                     }//40, 250, 180, 300
                      else if(touchLocations[i].x>=40&&touchLocations[i].x<=180&&touchLocations[i].y>=250&&touchLocations[i].y<=300 )
                      {    
-                       Default_Configure_Extraction();
+                      Default_Configure_Extraction();
                      }
                  }
                }
@@ -206,10 +198,9 @@ void StartUpScreen(void)
             }
             
              unsigned long currentMillis = millis();
-            if (Start_flag == 1)
-            {
-              if (currentMillis - previousMillis >= interval)
-              {
+            if (Start_flag == 1){
+             
+              if (currentMillis - previousMillis >= interval) {
                 previousMillis = currentMillis;
                 TotalTime = TotalTime - 1;
                 Max_minutes=Max_minutes-1;
@@ -225,22 +216,19 @@ void StartUpScreen(void)
               }
             }
   
-          if (P1_flag == 1)
-          {
+          if (P1_flag == 1){
             
             if (currentMillis - previousMillis2 >= interval)
             {
               previousMillis2 = currentMillis;
               P1_TotalTime = P1_TotalTime - 1;   
-              //Serial.println(P1_TotalTime); 
+              Serial.println(P1_TotalTime); 
               if(P1_TotalTime > 1)
               {
               Running_P1();
               }
-              else if(P1_TotalTime <= 0)
+              else if(P1_TotalTime == 0)
               {
-                P1_TotalTime=0;
-                process_stop();
                 Input = analogRead(TEMP_PIN);
                 myPID.Compute();
                 
@@ -249,29 +237,23 @@ void StartUpScreen(void)
                   windowStartTime += WindowSize;
                 }
                 
-                if (currentMillis - previousMillis3 >= interval) 
-                {
+                if (currentMillis - previousMillis3 >= interval) {
                   previousMillis3 = currentMillis;
                   P2_TotalTime = P2_TotalTime - 1; 
-                  //Serial.println(P2_TotalTime); 
-                  if(P2_TotalTime > 1)
-                  {
-                    digitalWrite(HEATING_PIN,HIGH);
+                    
+                  if(P2_TotalTime > 1){
                     Running_P2();
                   }
                   
-                  else if(P2_TotalTime <= 0)
-                  {
-                    P2_TotalTime=0;
-                    process_stop();
+                  else if(P2_TotalTime == 0){
+                  P2_flag=1;
                   }
                 }
-             }
-           }
-         }
+                }
+            }
+          }
   
-          if (Stop_flag == 1)
-          {
+          if (Stop_flag == 1){
               Start_flag=0;
               P1_flag=0; 
               if (currentMillis - previousMillis >= interval) {

@@ -1,0 +1,140 @@
+/*////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------
+// AEVA LAB CODE
+// DETAILS: Temperature Settings
+// ------------------------------------------------------------
+///////////////////////////////////////////////////////////////*/
+
+void Temperature_Increase1(void){
+Serial.println("Plus button pressed");
+ 
+  if(temp<140)
+  {
+  temp=temp+1;
+  sprintf(newtemp, "%d", temp);
+  Serial.println(newtemp);
+  myGLCD.setColor(VGA_GRAY);
+  myGLCD.fillRoundRect(325, 180, 480, 250);
+  myGLCD.setBackColor(VGA_GRAY);
+  myGLCD.setColor(VGA_BLACK);
+  myGLCD.setFont(SevenSegNumFont);
+  myGLCD.print(newtemp, CENTER, 190);
+  setTemp = atoi(newtemp);
+  Serial.println(setTemp);
+  }
+}
+
+
+void Temperature_Decrease1(void){
+Serial.println("Minus button pressed");
+  temp=75;
+  if(temp>0)
+  {
+  temp=temp-1;
+  sprintf(newtemp, "%d", temp);
+  Serial.println(newtemp);
+  myGLCD.setColor(VGA_GRAY);
+  myGLCD.fillRoundRect(325, 180, 480, 250);
+  myGLCD.setBackColor(VGA_GRAY);
+  myGLCD.setColor(VGA_BLACK);
+  myGLCD.setFont(SevenSegNumFont);
+  myGLCD.print(newtemp, CENTER, 190);
+  setTemp = atoi(newtemp);
+  Serial.println(setTemp);
+  }
+}
+
+void Default_Temperature_Decrease1(void){
+Serial.println("Minus button pressed");
+  if(default_temp>0)
+  {
+  default_temp=default_temp-1;
+  sprintf(default_newtemp, "%d", default_temp);
+  Serial.println(default_newtemp);
+  myGLCD.setColor(VGA_GRAY);
+  myGLCD.fillRoundRect(325, 180, 480, 250);
+  myGLCD.setBackColor(VGA_GRAY);
+  myGLCD.setColor(VGA_BLACK);
+  myGLCD.setFont(SevenSegNumFont);
+  myGLCD.print(default_newtemp, CENTER, 190);
+  setTemp = atoi(default_newtemp);
+  Serial.println(setTemp);
+  }
+}
+
+void Default_Temperature_Increase1(void){
+Serial.println("Plus button pressed");
+ 
+  if(default_temp<140)
+  {
+  default_temp=default_temp+1;
+  sprintf(default_newtemp, "%d", default_temp);
+  Serial.println(default_newtemp);
+  myGLCD.setColor(VGA_GRAY);
+  myGLCD.fillRoundRect(325, 180, 480, 250);
+  myGLCD.setBackColor(VGA_GRAY);
+  myGLCD.setColor(VGA_BLACK);
+  myGLCD.setFont(SevenSegNumFont);
+  myGLCD.print(default_newtemp, CENTER, 190);
+  setTemp = atoi(default_newtemp);
+  Serial.println(setTemp);
+  }
+}
+
+void Temperature_Increase2(void){
+Serial.println("Plus button pressed");
+  if(temp2<140)
+  {
+  temp2=temp2+1;
+  sprintf(newtemp2, "%d", temp2);
+  Serial.println(newtemp2);
+  myGLCD.setColor(VGA_GRAY);
+  myGLCD.fillRoundRect(325, 180, 480, 250);
+  myGLCD.setBackColor(VGA_GRAY);
+  myGLCD.setColor(VGA_BLACK);
+  myGLCD.setFont(SevenSegNumFont);
+  myGLCD.print(newtemp2, CENTER, 190);
+  setTemp = atoi(newtemp2);
+  Serial.println(setTemp2);
+  }
+}
+
+void Temperature_Decrease2(void){
+Serial.println("Minus button pressed");
+  if(temp2>0)
+  {
+  temp2=temp2-1;
+  sprintf(newtemp2, "%d", temp2);
+  Serial.println(newtemp2);
+  myGLCD.setColor(VGA_GRAY);
+  myGLCD.fillRoundRect(325, 180, 480, 250);
+  myGLCD.setBackColor(VGA_GRAY);
+  myGLCD.setColor(VGA_BLACK);
+  myGLCD.setFont(SevenSegNumFont);
+  myGLCD.print(newtemp2, CENTER, 190);
+  setTemp = atoi(newtemp2);
+  Serial.println(setTemp2);
+  }
+} 
+
+
+float Thermistor(int RawADC) {
+  long Resistance;  
+  float Temp;  // Dual-Purpose variable to save space.
+  Resistance=pad*((1024.0 / RawADC) - 1); 
+  Temp = log(Resistance); // Saving the Log(resistance) so not to calculate  it 4 times later
+  Temp = 1 / (0.001129148 + (0.000234125 * Temp) + (0.0000000876741 * Temp * Temp * Temp));
+  Temp = Temp - 273.15;  // Convert Kelvin to Celsius                      
+  return Temp;                                      
+}
+
+
+void readTemp() 
+{
+  float temp;
+  temp=Thermistor(analogRead(TEMP_PIN));       // read ADC and  convert it to Celsius
+  currentTemp = (temp * 9.0)/ 5.0 + 32.0;                  // converts to  Fahrenheit
+  Serial.print(", Fahrenheit: "); 
+  Serial.print(currentTemp);                             // display  Fahrenheit
+  Serial.println("");  
+}
